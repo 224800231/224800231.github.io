@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2025-06-07T13:13:09.002Z</updated>
+  <updated>2025-06-07T14:46:02.007Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,25 +17,178 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Vim粘贴</title>
+    <title>Webpackcss import 使用 alias 相对路径</title>
+    <link href="http://example.com/wiki/Webpack/"/>
+    <id>http://example.com/wiki/Webpack/</id>
+    <published>2025-06-07T14:39:29.000Z</published>
+    <updated>2025-06-07T14:46:02.007Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>在用 Webpack 处理打包时，可将某一目录配置一个别名，代码中就能使用与别名的相对路径引用资源。</p><p>在 Vue 项目中，我们通常使用 <code>vue-webpack</code> 脚手架生成工程模板，然后配置 <code>@</code> 为项目根目录下放资源和源码的 <code>/src</code> 目录的别名；</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...,</span><br><span class="line">resolve: &#123;</span><br><span class="line">  ...,</span><br><span class="line">  <span class="built_in">alias</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;@&#x27;</span>: resolve(<span class="string">&#x27;src&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样我们就可以在 js 文件中用形如 <code>import tool from &#39;@/utils/xxx&#39; </code>的方式引用 <code>/src/utils/xxx.js </code>文件，并且 Webpack 能正确识别并打包。</p><p>但是在 css 文件，如 less, sass, stylus 中，使用 <code>@import &quot;@/style/theme&quot; </code>的语法引用相对 <code>@ </code>的目录确会报错，”找不到 ‘@’ 目录”，说明 webpack 没有正确识别资源相对路径。</p><h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>原因是 css 文件会被用<code> css-loader</code> 处理，这里 css <code>@import </code>后的字符串会被 <code>css-loader</code> 视为绝对路径解析，因为我们并没有添加 <code>css-loader</code> 的 <a href="">alias</a>，所以会报找不到 <code>@</code> 目录。</p><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>在 Webpack 中 css import 使用 alias 相对路径的解决办法有两种；</p><p>一是直接为 <code>css-loader</code> 添加 <a href="">ailas</a> 的路径，但是在 <code>vue-webpack </code>给的模板中，单独针对这个插件添加配置就显得麻烦冗余了；</p><p>二是在引用路径的字符串最前面添加上 ~ 符号，如 <code>@import &quot;~@/style/theme&quot;</code>；Webpack 会将以 ~ 符号作为前缀的路径视作依赖模块而去解析，这样 <code>@</code> 的 alias 配置就能生效了。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><code>~ </code>视为模块解析是 webpack 做的事，不是 css-loader 做的事。</p><p>各类非 js 直接引用（<code>import require</code>）静态资源，依赖相对路径加载问题，都可以用 ~ 语法完美解决；</p><p>例如 css module 中：<code> @import &quot;~@/style/theme&quot;</code></p><p>css 属性中： <code>background: url(&quot;~@/assets/xxx.jpg&quot;)</code></p><p>html 标签中： <code>&lt;img src=&quot;~@/assets/xxx.jpg&quot; alt=&quot;alias&quot;&gt;</code></p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><ul><li><a href="">vue-webpack 资源路径的处理</a></li><li><a href="https://github.com/webpack-contrib/css-loader/issues/49">Using url(path) with resolve.alias</a></li><li><a href="https://github.com/webpack-contrib/css-loader#url">CSS Loader Usage Url</a></li></ul></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h1&gt;&lt;p&gt;在用 Webpack 处理打包时，可将某一目录配置一个别名，代码中就能使用与别名的相对路径引用资源。&lt;/p&gt;
+&lt;p&gt;在 Vue 项目中，我们</summary>
+      
+    
+    
+    
+    <category term="技术开发" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="前端" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="css-loader" scheme="http://example.com/tags/css-loader/"/>
+    
+    <category term="webpack" scheme="http://example.com/tags/webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gulp-imagemin使用与参数设置</title>
+    <link href="http://example.com/wiki/gulp-imagemin/"/>
+    <id>http://example.com/wiki/gulp-imagemin/</id>
+    <published>2025-06-07T14:30:21.000Z</published>
+    <updated>2025-06-07T14:38:44.888Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用版本"><a href="#使用版本" class="headerlink" title="使用版本"></a>使用版本</h1><ul><li>gulp : v3.9.1</li><li>gulp-imagemin : v3.1.1</li></ul><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>gulp-imagemin 是配合 gulp 用作压缩图片文件的工具（包括PNG、JPEG、GIF和SVG图片）。</p><p>gulp-imagemin <strong>更新 v3.0.0 版本后，用法与之前版本有所区别</strong>。</p><p>最近我一开始使用的时候就在网上搜索，看到很多博客都讲得一样，于是随便复制了一段代码拿来用。但是实际测试发现，这段代码里设置的参数并没有起作用，比如不管怎样设置压缩质量，出来的结果都一样。于是开始调试，通过阅读源码和官方文档后，我发现目前<strong>国内网上关于</strong>gulp-imagemin <strong>的代码大部分都是错的</strong>，并且明显看得出是相互抄袭复制的。或者也不能说是错了——没有注明版本，原来的代码用在目前的版本（v3.1.1）上就是错的。</p><p>我摘抄了一则 gulp-imagemin 网上常见的<strong>错误代码</strong> 如下：（<strong>注意是对 v3.0.0 及以上版本的错误代码，对 v2.4.0 版本可能正确。</strong>）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//只适用于gulp-imagemin 2.4.0 或以下版本</span><br><span class="line">var gulp = require(<span class="string">&#x27;gulp&#x27;</span>),</span><br><span class="line">    imagemin = require(<span class="string">&#x27;gulp-imagemin&#x27;</span>);</span><br><span class="line"> </span><br><span class="line">gulp.task(<span class="string">&#x27;testImagemin&#x27;</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;src/img/*.&#123;png,jpg,gif,ico&#125;&#x27;</span>)</span><br><span class="line">        .pipe(imagemin(&#123;</span><br><span class="line">            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）</span><br><span class="line">            progressive: <span class="literal">true</span>, //类型：Boolean 默认：<span class="literal">false</span> 无损压缩jpg图片</span><br><span class="line">            interlaced: <span class="literal">true</span>, //类型：Boolean 默认：<span class="literal">false</span> 隔行扫描gif进行渲染</span><br><span class="line">            multipass: <span class="literal">true</span> //类型：Boolean 默认：<span class="literal">false</span> 多次优化svg直到完全优化</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">&#x27;dist/img&#x27;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>上段代码出处<a href="">gulp教程之gulp-imagemin | 一点</a></p><p>且不说 <code>progressive: true </code>的意思应该是“转为渐进式图片”，这段代码在 gulp-imagemin v3.0.0 之后就不正确了，主要体现在 <code>imagemin(option)</code> 的参数设置。</p><p>目前网上没有找到几个 3.0.0 之后版本的示例代码，于是我自己去查看官方 API 说明，这里摘抄一段如下：<br>sindresorhus committed on 12 Aug 2016</p><h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p>Comes bundled with the following lossless optimizers:</p><p>gifsicle — Compress GIF images<br>jpegtran — Compress JPEG images<br>optipng — Compress PNG images<br>svgo — Compress SVG images<br>These are bundled for convenience and most will not need anything else.</p><h1 id="imagemin-plugins-options"><a href="#imagemin-plugins-options" class="headerlink" title="imagemin([plugins], [options])"></a>imagemin([plugins], [options])</h1><p>Unsupported files are ignored.</p><h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><p>Type: <code>Array</code><br>Default: <code>[imagemin.gifsicle(), imagemin.jpegtran(), imagemin.optipng(), imagemin.svgo()]</code></p><p>Plugins to use. This will overwrite the default plugins. Note that the default plugins comes with good defaults and should be sufficient in most cases. See the individual plugins for supported options.</p><h2 id="options"><a href="#options" class="headerlink" title="options"></a>options</h2><p>Type: <code>Object</code></p><h2 id="verbose"><a href="#verbose" class="headerlink" title="verbose"></a>verbose</h2><p>Type: <code>boolean</code><br>Default: <code>false</code></p><p>Output more detailed information.</p><p>可以看到 <code>options</code> 项只有一个项 <code>verbose</code>，用于输出详细信息，而不是像上面那段代码的 <code>optimizationLevel interlaced </code>等项。</p><p>在四个默认插件的 API 文档中又能进一步找到参数说明。</p><p>根据官方 API 文档，我这里给出我的示例代码如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// gulp-imagemin v3.0.0 及以上版本</span><br><span class="line">const gulp = require(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line">const imagemin = require(<span class="string">&#x27;gulp-imagemin&#x27;</span>);</span><br><span class="line">gulp.task(<span class="string">&#x27;minify-imgs&#x27;</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> gulp.src(<span class="string">&#x27;./public/images/**/*.&#123;png,jpg,gif,svg&#125;&#x27;</span>)</span><br><span class="line">        .pipe(imagemin([</span><br><span class="line">                imagemin.gifsicle(&#123;interlaced: <span class="literal">true</span>&#125;), </span><br><span class="line">                imagemin.jpegtran(&#123;progressive: <span class="literal">true</span>&#125;), </span><br><span class="line">                imagemin.optipng(), </span><br><span class="line">                imagemin.svgo()</span><br><span class="line">            ], &#123;verbose: <span class="literal">false</span>&#125;</span><br><span class="line">        ))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">&#x27;./public/images&#x27;</span>))</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>以上代码仍使用四个默认 imagemin 插件，设置将 gif 转为交错式，将 jpeg 转为渐进式，png 与 svg 使用默认设置，不输出详细信息。</p><p><strong>所以用某一个工具或者模块之前，应该先自己阅读一遍官方文档。</strong> 我所了解的现在人们一般学习过程是，先看博客里的入门教程，然后直接写代码，学过了入门级往深一点走，才知道遇到问题会去查官方文档。我想说，官方文档有时候确实难啃，但是如果一开始我们就看了官方文档，后面会不会少走点弯路呢？</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><ul><li><a href="">gulp教程之gulp-imagemin</a></li><li><a href="">gulp-imagemin图片压缩—-gulp系列</a></li><li><a href="https://www.npmjs.com/package/gulp-imagemin">gulp-imagemin | npmjs</a></li><li><a href="https://github.com/sindresorhus/gulp-imagemin">sindresorhus&#x2F;gulp-imagemin | GitHub</a></li><li><a href="https://github.com/imagemin/imagemin-jpegtran">imagemin&#x2F;imagemin-jpegtran | GitHub</a></li></ul></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;使用版本&quot;&gt;&lt;a href=&quot;#使用版本&quot; class=&quot;headerlink&quot; title=&quot;使用版本&quot;&gt;&lt;/a&gt;使用版本&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;gulp : v3.9.1&lt;/li&gt;
+&lt;li&gt;gulp-imagemin : v3.1.1&lt;/li&gt;
+&lt;/ul&gt;</summary>
+      
+    
+    
+    
+    <category term="技术开发" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="前端" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="Nodejs" scheme="http://example.com/tags/Nodejs/"/>
+    
+    <category term="gulp" scheme="http://example.com/tags/gulp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Selenium中使用 Chrome 路径问题</title>
+    <link href="http://example.com/wiki/Selenium/"/>
+    <id>http://example.com/wiki/Selenium/</id>
+    <published>2025-06-07T14:23:34.000Z</published>
+    <updated>2025-06-07T14:29:20.384Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>这个问题的起因是折腾了好久，vue2 官方模板 <code>vue init webpack</code> 初始化后，<code>npm install</code> 完，直接 <code>npm run e2e </code>都报错。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error retrieving a new session from the selenium server</span><br><span class="line"></span><br><span class="line">Connection refused! Is selenium server started?</span><br></pre></td></tr></table></figure><h1 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h1><p><code>nightwatch.conf.js </code>中，对服务器和浏览器的地址描述，用的分别是</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server_path: require(<span class="string">&#x27;selenium-server&#x27;</span>).path</span><br><span class="line"><span class="string">&#x27;webdriver.chrome.driver&#x27;</span>: require(<span class="string">&#x27;chromedriver&#x27;</span>).path</span><br></pre></td></tr></table></figure><p>在 <code>node</code> 中检查地址没问题，包也没问题。</p><p>查找官网资料未果，后在各网友经验中发现两句关键描述：</p><p><strong>在 selenium 中使用 chromedriver 驱动，除了需要下载 chromedriver.exe 然后放置在 chrome 浏览器的安装目录之外，还要将 chrome 安装目录添加到环境变量 path 中。</strong></p><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><p>1.从 <code>node_modules</code> 的 <code>chormedriver</code> 包中复制出 <code>chromedriver.exe</code> 到 Chrome 安装目录下（<code>G</code>oogle&#x2F;Chrome&#x2F;Application&#x2F;<code>），和 </code>chromed.exe<code> 放在同一目录中。 2.将 Chrome 安装目录（</code>Google&#x2F;Chrome&#x2F;Application&#x2F;<code>）添加到环境变量 </code>path<code>下。 3.把</code>nightwatch.conf.js<code>中的</code>webdriver.chrome.driver<code>对应的路径手动指定到 Chrome 安装目录下的</code>chromedriver.exe，Win<code>下记得字符转义。 此时</code>npm run e2e&#96; 能成功启动 Chrome 并测试。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><ul><li><a href="https://blog.csdn.net/carsonzhang_/article/details/46318531">selenium chromedriver配置</a></li><li><a href="https://www.cnblogs.com/Jeff-cui/p/4940410.html">使用webdriver打开本地浏览器</a></li></ul></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h1&gt;&lt;p&gt;这个问题的起因是折腾了好久，vue2 官方模板 &lt;code&gt;vue init webpack&lt;/code&gt; 初始化后，&lt;code&gt;npm i</summary>
+      
+    
+    
+    
+    <category term="技术开发" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="前端" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>awk管道操作小结</title>
+    <link href="http://example.com/wiki/awk/"/>
+    <id>http://example.com/wiki/awk/</id>
+    <published>2025-06-07T13:29:34.000Z</published>
+    <updated>2025-06-07T13:45:57.827Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>大致是希望使用 awk 读取一个文本文件，通过空行把文本分割成多个文本块，依次把每个文本块输入到一个程序，并把结果依次输出到指定文件。</p><p>先看文件结构：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">plus.sh  data.txt</span><br></pre></td></tr></table></figure><p>其中， <code>plus.sh</code> 文件内容如下</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">IFS=<span class="string">&quot; &quot;</span></span><br><span class="line"><span class="built_in">read</span> a b</span><br><span class="line">((c=a+b)) </span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;c&#125;</span></span><br></pre></td></tr></table></figure><p>代码含义是从标准输入读入两个数， <code>a </code>、<code>b</code>，返回 <code>a+b</code> 的结果。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./plus.sh</span><br><span class="line">2 3    <span class="comment"># &lt;-- its my input</span></span><br><span class="line">5      <span class="comment"># --&gt; its result</span></span><br></pre></td></tr></table></figure><p><code>data.txt</code> 中的数据如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">0 30</span><br><span class="line"></span><br><span class="line">30 40</span><br><span class="line"></span><br><span class="line">40 80</span><br><span class="line"></span><br><span class="line">80 100</span><br></pre></td></tr></table></figure><p>目标是使用 awk 从 <code>data.txt</code> 中读入 4 组数据，分别输入到 <code>plus.sh</code> 中，返回 4 个结果值，并依次输入到 <code>output.txt</code> 中。预期结果 <code>output.txt</code> 如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">30</span><br><span class="line">70</span><br><span class="line">120</span><br><span class="line">180</span><br></pre></td></tr></table></figure><h1 id="经过"><a href="#经过" class="headerlink" title="经过"></a>经过</h1><p>一开始，简单的思路是，awk 使用<strong>空行分割文本文件</strong>，把每组文本块<strong>通过管道输入</strong>到调用的 <code>plus.sh </code>中，再把每组的结果通过重定向追加到 <code>output.txt</code> 文件中。<br>根据思路于是写出如下代码：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ awk -v RS=<span class="string">&quot;&quot;</span> <span class="string">&#x27;&#123;print | &quot;./plus.sh &gt;&gt; output.txt&quot;&#125;&#x27;</span> data.txt</span><br></pre></td></tr></table></figure><p>然而一看结果，只有第一个分段中求出来的值；</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">plus.sh  data.txt  output.txt</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cat</span> output.txt</span><br><span class="line">30</span><br></pre></td></tr></table></figure><p>经过调试和单独输出，发现分段也没问题，单独 <code>print </code>也是分段的没问题，于是大概猜测<strong>问题出在重定向上</strong>，除了第一个值以外的其他结果并没有被重定向到文件（此处只是当时猜测，其实不对，请看下文分析）；</p><p>通过查阅 <strong>「awk 使用管道输出到 shell 中」</strong> 的相关资料，找到问题答案：</p><p>如果在 awk 程序中打开了管道，必须<strong>先关闭该管道才能打开另一个管道</strong>。也就是说一次只能打开一个管道。</p><p><strong>shell 命令必须被双引号引用起来</strong>。</p><p>如果打算<strong>再次</strong>在 awk 程序中使用某个文件或管道进行读写，则可能要先关闭程序，因为其中的管道会保持打开状态直至脚本运行结束。注意，管道一旦被打开，就会保持打开状态直至 awk 退出。</p><p>对于 <code>awk output | shell input</code> 来说，shell 接收 awk 的输出，并进行处理。需要注意的是，<strong>awk 的 output 是先缓存在 pipe 中，等输出完毕后再调用 shell 命令 处理</strong>，shell 命令只处理一次，而且<strong>处理的时机是 「awk程序结束时，或者管道关闭时（需要显式的关闭管道）」</strong></p><p>对于刚才的问题，简单的解释就是因为管道缓存，<code>print</code>的所有输出被堆到一起只传了一次给 <code>plus.sh</code>，而且这一次相当于传了整个文件，但 <code>plus.sh</code> 在读了两个数计算完后就退出了，后面的所有数都没用上，由于 <code>plus.sh</code> 只计算了一次，因此结果也只有一个。（并非上面猜测的结果未被重定向）</p><h1 id="尝试解决"><a href="#尝试解决" class="headerlink" title="尝试解决"></a>尝试解决</h1><p>最初的解决尝试是使用 awk 中的 <code>close</code> 命令关闭文件管道，于是写出如下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ awk -v RS=<span class="string">&quot;&quot;</span> <span class="string">&#x27;&#123;print | &quot;./plus.sh &gt;&gt; output.txt&quot;; close(&quot;output.txt&quot;)&#125;&#x27;</span> data.txt</span><br></pre></td></tr></table></figure><p>结果依然只有一个值……</p><p>继续查阅资料才知道，<code>close </code>关闭时需要输入的是<strong>管道描述符</strong>，而非只是文件名，而管道描述符是包含<strong>对管道调用的整个命令在内的 shell 命令字符串</strong>，也就是说，应该是 <code>close(&quot;./plus.sh &gt;&gt; output.txt&quot;)</code> 。</p><p>再次尝试代码修改如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ awk -v RS=<span class="string">&quot;&quot;</span> <span class="string">&#x27;&#123;print | &quot;./plus.sh &gt;&gt; output.txt&quot;; close(&quot;./plus.sh &gt;&gt; output.txt&quot;)&#125;&#x27;</span> data.txt</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cat</span> output.txt</span><br><span class="line">30</span><br><span class="line">70</span><br><span class="line">120</span><br><span class="line">180</span><br></pre></td></tr></table></figure><p>OK，解决问题，这句代码就是能用的了。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总结下刚刚踩的坑，再做些优化；</p><p>1.awk 中先关闭该管道才能打开另一个管道；</p><p>2.<code>awk output | shell input </code>时，awk 输出缓存到管道中，只有 awk 程序结束时，或者管道关闭时，才把缓存中的所有输出交由 shell 处理；</p><p>3.管道描述符是调用管道的整个 shell 命令字符串；（如在<code>print | &quot;./plus.sh &gt;&gt; output.txt&quot;;</code>中就是 <code>&quot;./plus.sh &gt;&gt; output.txt&quot;</code>）</p><p>4.awk 语句中使用 shell 变量<br>1.<code>&quot;&#39;$var&#39;&quot;</code> 的形式</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var=<span class="string">&quot;test&quot;</span></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print &quot;&#x27;</span><span class="variable">$var</span><span class="string">&#x27;&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure><p>2.变量中有空格时使用 “‘“$var”‘“</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var=<span class="string">&quot;this is a test&quot;</span> </span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print &quot;&#x27;</span><span class="string">&quot;<span class="variable">$var</span>&quot;</span><span class="string">&#x27;&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure><p>3.变量中有空格，并且变量当作 shell 命令执行时，使用<code> &quot;\&quot;&#39;&quot;$&#123;var&#125;&quot;&#39;\&quot;&quot;</code> 形式</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd=<span class="string">&quot;./plus a and b.sh&quot;</span></span><br><span class="line">awk <span class="string">&#x27;BEGIN&#123;print | &quot;\&quot;&#x27;</span><span class="string">&quot;<span class="variable">$&#123;cmd&#125;</span>&quot;</span><span class="string">&#x27;\&quot;&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure><p>再把上面 awk 语句写入到一个脚本中，方便调用：<br>input_test.sh</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">cmd=<span class="string">&quot;<span class="variable">$&#123;1:-&quot;./main.sh&quot;&#125;</span>&quot;</span></span><br><span class="line">data=<span class="string">&quot;<span class="variable">$&#123;2:-&quot;test_data.txt&quot;&#125;</span>&quot;</span></span><br><span class="line">output=<span class="string">&quot;<span class="variable">$&#123;3:-&quot;stdout.txt&quot;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">awk -v RS=<span class="string">&quot;&quot;</span> <span class="string">&#x27;&#123;print $n | &quot;\&quot;&#x27;</span><span class="string">&quot;<span class="variable">$&#123;cmd&#125;</span>&quot;</span><span class="string">&#x27;\&quot; &gt;&gt; \&quot;&#x27;</span><span class="string">&quot;<span class="variable">$&#123;output&#125;</span>&quot;</span><span class="string">&#x27;\&quot;&quot;;close(&quot;\&quot;&#x27;</span><span class="string">&quot;<span class="variable">$&#123;cmd&#125;</span>&quot;</span><span class="string">&#x27;\&quot; &gt;&gt; \&quot;&#x27;</span><span class="string">&quot;<span class="variable">$&#123;output&#125;</span>&quot;</span><span class="string">&#x27;\&quot;&quot;)&#125;&#x27;</span> <span class="variable">$&#123;data&#125;</span></span><br></pre></td></tr></table></figure><p>然后我们可以调用这个脚本，帮我们分割文本做输入输出。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input_test.sh [command] [data-file] [output-file]</span></span><br><span class="line"></span><br><span class="line">$ ./input_test.sh <span class="string">&quot;./plus.exe&quot;</span></span><br><span class="line"><span class="comment"># 接收三个参数，要测试的命令，数据文件，输出文件，都有默认值</span></span><br><span class="line"><span class="comment"># ==&gt; 将自动分割 test_data.txt 中的文本块分别对 plus.exe 做输入，并把结果依次写入 stdout.txt 中</span></span><br></pre></td></tr></table></figure><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><ul><li><a href="https://www.cnblogs.com/dong008259/archive/2011/12/06/2277287.html">linux之awk用法 | 东方雨中漫步者</a></li></ul></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;大致是希望使用 awk 读取一个文本文件，通过空行把文本分割成多个文本块，依次把每个文本块输入到一个程序，并把结果依次输出到指定文件。&lt;/p</summary>
+      
+    
+    
+    
+    <category term="技术开发" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="Linux" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/Linux/"/>
+    
+    <category term="Shell" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/Linux/Shell/"/>
+    
+    
+    <category term="Shell" scheme="http://example.com/tags/Shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu 16.04开机默认命令行界面</title>
+    <link href="http://example.com/wiki/Ubuntu-16-04/"/>
+    <id>http://example.com/wiki/Ubuntu-16-04/</id>
+    <published>2025-06-07T13:24:35.000Z</published>
+    <updated>2025-06-07T13:30:21.699Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="关闭图形界面，默认命令行"><a href="#关闭图形界面，默认命令行" class="headerlink" title="关闭图形界面，默认命令行"></a>关闭图形界面，默认命令行</h1><p>1.不推介，不可恢复</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> lightdm.service</span><br></pre></td></tr></table></figure><p>2.推介，安全，可恢复</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl set-default multi-user.target</span><br></pre></td></tr></table></figure><p>只是修改默认交互目标，开机不会后台启动桌面。</p><h1 id="开启图形界面，默认图新界面"><a href="#开启图形界面，默认图新界面" class="headerlink" title="开启图形界面，默认图新界面"></a>开启图形界面，默认图新界面</h1><p>1.针对上述第一条，只能重装 lightdm</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install --reinstall lightdm</span><br></pre></td></tr></table></figure><p>2.对应上述第二条，再切换回默认图形交互</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl set-default graphical.target</span><br></pre></td></tr></table></figure><p>3.临时开启<br>刚刚两条都是需要要配置后重启的，不过就算不切换默认，或者在重启之前，任何时候都可以临时开启图形界面：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start lightdm</span><br></pre></td></tr></table></figure><p>只限当次开机中，如果没有切换默认图形界面，下次开机任然会是命令行界面。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;关闭图形界面，默认命令行&quot;&gt;&lt;a href=&quot;#关闭图形界面，默认命令行&quot; class=&quot;headerlink&quot; title=&quot;关闭图形界面，默认命令行&quot;&gt;&lt;/a&gt;关闭图形界面，默认命令行&lt;/h1&gt;&lt;p&gt;1.不推介，不可恢复&lt;/p&gt;
+&lt;figure class=&quot;</summary>
+      
+    
+    
+    
+    <category term="技术开发" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="Linux" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/Linux/"/>
+    
+    <category term="Ubuntu" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/Linux/Ubuntu/"/>
+    
+    
+    <category term="Ubuntu" scheme="http://example.com/tags/Ubuntu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vim粘贴模式</title>
     <link href="http://example.com/wiki/Vimz/"/>
     <id>http://example.com/wiki/Vimz/</id>
     <published>2025-06-07T13:12:53.000Z</published>
-    <updated>2025-06-07T13:13:09.002Z</updated>
+    <updated>2025-06-07T13:23:13.399Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><ul><li><a href=""></a></li><li><a href=""></a></li></ul></blockquote>]]></content>
+    <content type="html"><![CDATA[<p>在开启自动缩进的 Vim 中使用<code>Shift + Insert</code>键粘贴带有缩进的代码时，Vim 会把粘贴的内容当作键盘输入来处理，使得每遇到一个换行符就会添加一次自动缩进，导致原本的代码每行被依次连续往后缩，导致代码变乱。</p><p>既然是缩进问题，首先尝试的是取消自动缩进功能：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot; 关闭自动缩进和智能缩进</span></span><br><span class="line"><span class="string">&quot;</span> <span class="built_in">set</span> noai</span><br><span class="line"><span class="string">&quot; set nosi</span></span><br><span class="line"><span class="string">:set nosmartindent </span></span><br><span class="line"><span class="string">:set noautoindent</span></span><br></pre></td></tr></table></figure><p>关闭自动缩进后，有时能解决错行了，有时还是不行。</p><p>更推荐的做法是使用 Vim 的 Paste 模式，这个是 Vim 自带的，为了避免粘贴时出现一些格式错误而使用的。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot; 开启粘贴模式</span></span><br><span class="line"><span class="string">:set paste</span></span><br><span class="line"><span class="string">&quot;</span> 取消粘贴模式</span><br><span class="line">:<span class="built_in">set</span> nopaste</span><br></pre></td></tr></table></figure><p>在粘贴模式下（Paste Mode），粘贴内容不会出现代码变形，通过部分了解，发现粘贴模式修改了好几项设置：</p><ul><li>textwidth 设置为 0</li><li>wrapmargin 设置为 0</li><li>softtabstop 设置为 0</li><li>关闭自动缩进（noautoindent nosmartindent）</li><li>重置 revins</li><li>重置 ruler</li><li>重置 showmatch</li><li>清空 formatoptions</li><li>禁用 lisp</li><li>禁用 indentexpr</li><li>禁用 cindent</li></ul><p>所以之前说的关闭自动缩进只是 Paste 模式下的一项，考虑不够全面，所以有时还是会格式错位。</p><p>并且 Paste 模式本身有一个切换选项 <code>pastetoggle</code>可以直接绑定快捷键来方便切换开启和取消粘贴模式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">set</span> pastetoggle=&lt;F11&gt;</span><br></pre></td></tr></table></figure><p>这样只需要按 <code>F11</code> 就能开启和取消粘贴模式了。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote><ul><li><a href=""></a></li><li><a href=""></a></li></ul></blockquote>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/l</summary>
+    <summary type="html">&lt;p&gt;在开启自动缩进的 Vim 中使用&lt;code&gt;Shift + Insert&lt;/code&gt;键粘贴带有缩进的代码时，Vim 会把粘贴的内容当作键盘输入来处理，使得每遇到一个换行符就会添加一次自动缩进，导致原本的代码每行被依次连续往后缩，导致代码变乱。&lt;/p&gt;
+&lt;p&gt;既然是缩进问题</summary>
       
     
     
     
+    <category term="技术开发" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="Linux" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/Linux/"/>
+    
+    <category term="Vim" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/Linux/Vim/"/>
+    
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+    <category term="Vim" scheme="http://example.com/tags/Vim/"/>
     
   </entry>
   
@@ -402,26 +555,6 @@
     <category term="Wiki" scheme="http://example.com/tags/Wiki/"/>
     
     <category term="知识管理" scheme="http://example.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/wiki/hello-world/"/>
-    <id>http://example.com/wiki/hello-world/</id>
-    <published>2025-06-04T05:57:11.603Z</published>
-    <updated>2025-06-07T08:19:11.585Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
     
   </entry>
   
