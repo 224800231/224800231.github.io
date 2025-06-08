@@ -162,11 +162,441 @@
                 <aside id="sidebar">
    
         
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>categories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            实训
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/wiki/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">Spark基础环境配置</a></li>  <li class="file"><a href="/wiki/Spark-local-stand-alone%E9%85%8D%E7%BD%AE/">Spark local& stand-alone配置</a></li>  <li class="file"><a href="/wiki/Spark-HA-Yarn%E9%85%8D%E7%BD%AE/">Spark HA & Yarn配置</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/hello-world/">Hello World</a></li>  <li class="file"><a href="/wiki/Webpack/"></a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
     
     <div id="toTop" class="fa fa-angle-up"></div>
 </aside>
             
             <section id="main">
+        <article id="post-Webpack" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+            
+        
+        
+            
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+    
+        <article id="post-Spark-HA-Yarn配置" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E5%AE%9E%E8%AE%AD/">实训</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Spark-HA-Yarn/" rel="tag">Spark HA & Yarn</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/Spark-HA-Yarn%E9%85%8D%E7%BD%AE/">
+            <time datetime="2025-06-08T06:26:19.000Z" itemprop="datePublished">2025-06-08</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/raw/writing/source/_posts/Spark-HA-Yarn配置.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/edit/writing/source/_posts/Spark-HA-Yarn配置.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/commits/writing/source/_posts/Spark-HA-Yarn配置.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/wiki/Spark-HA-Yarn%E9%85%8D%E7%BD%AE/">Spark HA &amp; Yarn配置</a>
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+                    
+                    <p></p><h1 id="配置Spark-HA"><a href="#配置Spark-HA" class="headerlink" title="配置Spark HA"></a>配置Spark HA</h1><h2 id="1-停止spark-集群"><a href="#1-停止spark-集群" class="headerlink" title="1.停止spark 集群"></a>1.停止spark 集群</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$SPARK_HOME</span>/sbin/stop-all.sh</span><br></pre></td></tr></table></figure>
+<h2 id="2-修改改配置"><a href="#2-修改改配置" class="headerlink" title="2.修改改配置"></a>2.修改改配置</h2><h3 id="修改spark-env-sh文件"><a href="#修改spark-env-sh文件" class="headerlink" title="修改spark-env.sh文件"></a>修改spark-env.sh文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//进入 spark 配置文件目录</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$SPARK_HOME</span>/conf</span><br><span class="line">//打开 spark-env.sh文件</span><br><span class="line">vim spark-env.sh</span><br><span class="line">//注释掉 Master配置</span><br><span class="line"><span class="comment"># export SPARK_MASTER_HOST=hadoop01</span></span><br><span class="line">//添加SPARK_DAEMON_JAVA_OPTS,内容如下:</span><br><span class="line"><span class="built_in">export</span> SPARK_DAEMON_JAVA_OPTS=<span class="string">&quot;-Dspark.deploy.recoveryMode=ZOOKEEPER  -Dspark.deploy.zookeeper.url=hadoop01:2181,hadoop02:2181,hadoop03:2181  -Dspark.deploy.zookeeper.dir=/spark&quot;</span></span><br><span class="line">//保存退出</span><br><span class="line">:wq</span><br></pre></td></tr></table></figure>
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spark.deploy.recoveryMode：恢复模式</span><br><span class="line">spark.deploy.zookeeper.url：ZooKeeper的Server地址</span><br><span class="line">spark.deploy.zookeeper.dir：保存集群元数据信息的文件、目录。包括Worker、Driver、Application信息。</span><br></pre></td></tr></table></figure>
+<h3 id="分发到其它节点"><a href="#分发到其它节点" class="headerlink" title="分发到其它节点"></a>分发到其它节点</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp spark-env.sh hadoop02:<span class="variable">$PWD</span></span><br><span class="line">scp spark-env.sh hadoop03:<span class="variable">$PWD</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h2><h3 id="启动zk集群博主直接用的脚本"><a href="#启动zk集群博主直接用的脚本" class="headerlink" title="启动zk集群博主直接用的脚本"></a>启动zk集群博主直接用的脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zkstart-all.sh</span><br><span class="line">没有的话可以使用 zkServer.sh start 命令启动</span><br><span class="line">没有脚本可以配置参考链接:</span><br><span class="line">https://blog.csdn.net/hongchenshijie/category_9453806.html</span><br></pre></td></tr></table></figure>
+<p>
+                
+            
+        
+        
+            </p></div>   
+            <div class="article-more-link">
+                <a href="/wiki/Spark-HA-Yarn%E9%85%8D%E7%BD%AE/#more">Read More</a>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+    
+        <article id="post-Spark-local-stand-alone配置" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E5%AE%9E%E8%AE%AD/">实训</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Spark/" rel="tag">Spark</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/Spark-local-stand-alone%E9%85%8D%E7%BD%AE/">
+            <time datetime="2025-06-08T06:25:46.000Z" itemprop="datePublished">2025-06-08</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/raw/writing/source/_posts/Spark-local-stand-alone配置.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/edit/writing/source/_posts/Spark-local-stand-alone配置.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/commits/writing/source/_posts/Spark-local-stand-alone配置.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/wiki/Spark-local-stand-alone%E9%85%8D%E7%BD%AE/">Spark local&amp; stand-alone配置</a>
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+                    
+                    <p></p><p>Standalone模式：这是Spark自带的简单集群管理器，适用于快速搭建测试集群或小型生产环境。在Standalone模式下，Spark自身作为独立的集群运行，通过启动Spark Master和Spark Worker进程来管理资源和调度作业。</p>
+<h1 id="Spark安装与启动"><a href="#Spark安装与启动" class="headerlink" title="Spark安装与启动"></a>Spark安装与启动</h1><h2 id="1-创建安装目录-所有节点"><a href="#1-创建安装目录-所有节点" class="headerlink" title="1.创建安装目录(所有节点)"></a>1.创建安装目录(所有节点)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/spark</span><br></pre></td></tr></table></figure>
+<h2 id="2-上传安装介质-Master节点-：spark-3-5-3-bin-hadoop3-tgz到安装目录-opt-spark"><a href="#2-上传安装介质-Master节点-：spark-3-5-3-bin-hadoop3-tgz到安装目录-opt-spark" class="headerlink" title="2.上传安装介质(Master节点)：spark-3.5.3-bin-hadoop3.tgz到安装目录&#x2F;opt&#x2F;spark"></a>2.上传安装介质(Master节点)：spark-3.5.3-bin-hadoop3.tgz到安装目录&#x2F;opt&#x2F;spark</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rz -b</span><br></pre></td></tr></table></figure>
+<h2 id="3-解压安装介质"><a href="#3-解压安装介质" class="headerlink" title="3.解压安装介质"></a>3.解压安装介质</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf spark-3.5.3-bin-hadoop3.tgz</span><br></pre></td></tr></table></figure>
+<h2 id="cd-SPARK-HOME-conf"><a href="#cd-SPARK-HOME-conf" class="headerlink" title="cd ${SPARK_HOME}\conf"></a>cd ${SPARK_HOME}\conf</h2><h2 id="vim-spark-default-conf"><a href="#vim-spark-default-conf" class="headerlink" title="vim spark-default.conf"></a>vim spark-default.conf</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spark.eventLog.enabled           <span class="literal">true</span></span><br><span class="line">spark.eventLog.<span class="built_in">dir</span>               hdfs://hadoop231:9000/user/hadoop/spark/event_log</span><br><span class="line">spark.yarn.historyServer.address hadoop231:19888</span><br><span class="line">spark.history.ui.port 9091</span><br><span class="line">spark.executor.extraJavaOptions   -Xss32M</span><br></pre></td></tr></table></figure>
+<p>
+                
+            
+        
+        
+            </p></div>   
+            <div class="article-more-link">
+                <a href="/wiki/Spark-local-stand-alone%E9%85%8D%E7%BD%AE/#more">Read More</a>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+    
+        <article id="post-Spark基础环境配置" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/%E5%AE%9E%E8%AE%AD/">实训</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JDK%EF%BC%8CHadoop%EF%BC%8CZookeeper/" rel="tag">JDK，Hadoop，Zookeeper</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+            <time datetime="2025-06-08T06:25:15.000Z" itemprop="datePublished">2025-06-08</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/raw/writing/source/_posts/Spark基础环境配置.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/edit/writing/source/_posts/Spark基础环境配置.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zthxxx/Wiki-site/commits/writing/source/_posts/Spark基础环境配置.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/wiki/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">Spark基础环境配置</a>
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+                    
+                    <p></p><h1 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h1><h2 id="JDK1-8安装"><a href="#JDK1-8安装" class="headerlink" title="JDK1.8安装"></a>JDK1.8安装</h2><p>1.双击安装包jdk-8u301-windows-x64.exe</p>
+<p>2.安装过程中选择指定的JDK安装目录，比如：D:&#x2F;java&#x2F;jdk1.8.0_301</p>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>1.配置JAVA_HOME环境变量</p>
+<p>2.配置JDK系统PATH路径</p>
+<p>3.配置CLASSPATH环境变量，.:%JAVA_HOME%\lib&#x2F;dt.jar;%JAVA_HOME%\lib\tools.jar; </p>
+<p>
+                
+            
+        
+        
+            </p></div>   
+            <div class="article-more-link">
+                <a href="/wiki/Spark%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/#more">Read More</a>
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+
+
+
+
+    
         <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
